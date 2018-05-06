@@ -61,7 +61,7 @@ defmodule Football.Game.League do
     changeset
     |> Changeset.validate_required([:code])
     |> Changeset.validate_length(:code, max: 4)
-    |> Changeset.validate_format(:code, ~r/^[a-zA-Z0-9]$/)
+    |> Changeset.validate_format(:code, ~r/^[a-zA-Z0-9]+$/)
     |> Changeset.update_change(:code, &String.downcase/1)
     |> Changeset.unique_constraint(:code)
   end
