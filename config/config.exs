@@ -14,8 +14,7 @@ config :football, FootballWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "t5kIPDG6GiKWqJZ4cNjCaL65ZuPdGJVIhQDk0VSDp5qOKWc9KogmzUosUJsAGqgL",
   render_errors: [view: FootballWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Football.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Football.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -24,4 +23,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

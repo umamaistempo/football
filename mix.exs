@@ -6,14 +6,12 @@ defmodule Football.Mixfile do
       app: :football,
       version: "0.0.1",
       elixir: "~> 1.4",
-      elixirc_options: elixirc_options(Mix.env),
-      elixirc_paths: elixirc_paths(Mix.env),
-      compilers: [:phoenix, :gettext] ++ Mix.compilers,
-
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
-      consolidate_protocols: Mix.env == :prod,
-
+      elixirc_options: elixirc_options(Mix.env()),
+      elixirc_paths: elixirc_paths(Mix.env()),
+      compilers: [:phoenix, :gettext] ++ Mix.compilers(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      consolidate_protocols: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
     ]
@@ -31,7 +29,7 @@ defmodule Football.Mixfile do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_),     do: ["lib"]
+  defp elixirc_paths(_), do: ["lib"]
 
   defp elixirc_options(:prod), do: [warnings_as_errors: true]
   defp elixirc_options(_), do: []
@@ -60,7 +58,7 @@ defmodule Football.Mixfile do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      "test": ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

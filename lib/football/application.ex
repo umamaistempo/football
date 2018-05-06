@@ -11,7 +11,7 @@ defmodule Football.Application do
       # Start the Ecto repository
       supervisor(Football.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(FootballWeb.Endpoint, []),
+      supervisor(FootballWeb.Endpoint, [])
       # Start your own worker by calling: Football.Worker.start_link(arg1, arg2, arg3)
       # worker(Football.Worker, [arg1, arg2, arg3]),
     ]
