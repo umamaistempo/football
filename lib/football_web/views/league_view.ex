@@ -11,6 +11,6 @@ defmodule FootballWeb.LeagueView do
   end
 
   def render("league.json", %{league: league}) do
-    %{id: league.id, code: league.code, name: league.name}
+    %{code: league.code, name: league.name}
   end
 end

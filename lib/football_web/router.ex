@@ -7,5 +7,10 @@ defmodule FootballWeb.Router do
 
   scope "/api", FootballWeb do
     pipe_through(:api)
+
+    scope "/leagues" do
+      get("/", LeagueController, :index)
+      get("/:code", LeagueController, :show)
+    end
   end
 end

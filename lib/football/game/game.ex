@@ -28,14 +28,14 @@ defmodule Football.Game do
 
   ## Examples
 
-      iex> get_league!(123)
+      iex> get_league!("foo")
       %League{}
 
-      iex> get_league!(456)
+      iex> get_league!("bar")
       ** (Ecto.NoResultsError)
 
   """
-  def get_league!(id), do: Repo.get!(League, id)
+  def get_league!(code), do: Repo.get_by!(League, code: String.downcase(code))
 
   @doc """
   Creates a league.
@@ -50,8 +50,8 @@ defmodule Football.Game do
 
   """
   def create_league(attrs \\ %{}) do
-    %League{}
-    |> League.changeset(attrs)
+    attrs
+    |> League.create()
     |> Repo.insert()
   end
 
@@ -69,7 +69,7 @@ defmodule Football.Game do
   """
   def update_league(%League{} = league, attrs) do
     league
-    |> League.changeset(attrs)
+    |> League.update(attrs)
     |> Repo.update()
   end
 
@@ -87,18 +87,5 @@ defmodule Football.Game do
   """
   def delete_league(%League{} = league) do
     Repo.delete(league)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking league changes.
-
-  ## Examples
-
-      iex> change_league(league)
-      %Ecto.Changeset{source: %League{}}
-
-  """
-  def change_league(%League{} = league) do
-    League.changeset(league, %{})
   end
 end
