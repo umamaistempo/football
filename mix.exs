@@ -5,7 +5,7 @@ defmodule Football.Mixfile do
     [
       app: :football,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.6",
       elixirc_options: elixirc_options(Mix.env()),
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -42,6 +42,7 @@ defmodule Football.Mixfile do
       {:phoenix, "~> 1.3.2"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
+      {:gettext, "~> 0.11"},
       {:postgrex, ">= 0.0.0"},
       {:cowboy, "~> 1.0"},
       {:ex_doc, "~> 0.18", only: :dev, runtime: false}
