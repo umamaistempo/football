@@ -9,22 +9,23 @@ defmodule Football.Game.League do
   """
 
   use Ecto.Schema
+  alias Ecto.Changeset
 
   @type code :: String.t()
   @type t :: %__MODULE__{
           code: code(),
           name: String.t()
         }
-  @type changeset :: changeset(Ecto.Changeset.action())
-  @type changeset(action) :: %Ecto.Changeset{data: %__MODULE__{}, action: action}
+  @type changeset :: changeset(Changeset.action())
+  @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
 
   @primary_key false
   schema "leagues" do
-    add(:code, :string, primary_key: true)
-    add(:name, :string)
+    field(:code, :string, primary_key: true)
+    field(:name, :string)
   end
 
-  @type create(map) :: changeset(:insert)
+  @spec create(map) :: changeset(:insert)
   @doc """
   Prepares a changeset to _create_ a new League.
 
@@ -35,11 +36,9 @@ defmodule Football.Game.League do
   """
   def create(params) do
     %__MODULE__{}
-    |> cast(params, [:code, :name])
-    |> validate_required([:code, :name])
-    |> validate_format(:code, ~r/^[a-zA-Z0-9]$/)
-    |> update_change(:code, &String.downcase/1)
-    |> unique_constraint(:code)
+    |> Changeset.cast(params, [:code, :name])
+    |> Changeset.validate_required([:name])
+    |> validate_code()
     |> Map.put(:action, :insert)
   end
 
@@ -52,8 +51,18 @@ defmodule Football.Game.League do
   """
   def update(data, params) do
     data
-    |> cast(params, :name)
-    |> validate_required([:name])
+    |> Changeset.cast(params, :name)
+    |> Changeset.validate_required([:name])
     |> Map.put(:action, :update)
+  end
+
+  @spec validate_code(changeset) :: changeset
+  defp validate_code(changeset) do
+    changeset
+    |> Changeset.validate_required([:code])
+    |> Changeset.validate_length(:code, max: 4)
+    |> Changeset.validate_format(:code, ~r/^[a-zA-Z0-9]$/)
+    |> Changeset.update_change(:code, &String.downcase/1)
+    |> Changeset.unique_constraint(:code)
   end
 end
