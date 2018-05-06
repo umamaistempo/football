@@ -56,8 +56,35 @@ defmodule Football.Game.LeagueTest do
   end
 
   describe "update/1" do
-    test "allows to change name"
-    test "cannot remove name"
-    test "does not allow to change code"
+    test "allows to change name" do
+      changeset = League.update(%League{name: "foobar"}, %{name: "Lemon"})
+
+      assert changeset.valid?
+
+      data = Ecto.Changeset.apply_changes(changeset)
+
+      assert data.name == "Lemon"
+    end
+
+    test "cannot remove name" do
+      data = %League{name: "foobar"}
+
+      changeset = League.update(data, %{name: ""})
+
+      refute changeset.valid?
+      assert :required in failed_validations(changeset).name
+    end
+
+    test "does not allow to change code" do
+      data = %League{name: "foobar", code: "foo"}
+
+      changeset = League.update(data, %{code: "bar"})
+
+      assert changeset.valid?
+      refute :code in Map.keys(changeset.changes)
+
+      updated = Ecto.Changeset.apply_changes(changeset)
+      assert updated.code == "foo"
+    end
   end
 end

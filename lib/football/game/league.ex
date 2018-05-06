@@ -51,7 +51,7 @@ defmodule Football.Game.League do
   """
   def update(data, params) do
     data
-    |> Changeset.cast(params, :name)
+    |> Changeset.cast(params, [:name])
     |> Changeset.validate_required([:name])
     |> Map.put(:action, :update)
   end
