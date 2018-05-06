@@ -45,6 +45,7 @@ defmodule Football.Mixfile do
       {:gettext, "~> 0.11"},
       {:postgrex, ">= 0.0.0"},
       {:cowboy, "~> 1.0"},
+      {:credo, "~> 0.9.2", only: :dev, runtime: false},
       {:ex_doc, "~> 0.18", only: :dev, runtime: false}
     ]
   end
