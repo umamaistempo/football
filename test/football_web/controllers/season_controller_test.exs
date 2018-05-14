@@ -55,7 +55,7 @@ defmodule FootballWeb.SeasonControllerTest do
       data = json_response(conn, 200)["data"]
       assert Enum.count(data) == 3
       assert Enum.all?(data, &match_format?/1)
-      assert Enum.all?(data, & &1["league_code"] == league.code)
+      assert Enum.all?(data, &(&1["league_code"] == league.code))
     end
   end
 end
