@@ -40,4 +40,19 @@ defmodule Football.Game.League.Season do
     |> Changeset.cast(params, [:season_code])
     |> Changeset.validate_required([:season_code])
   end
+
+  @spec create(League.t(), map) :: changeset(:insert)
+  @doc """
+  Prepares a changeset to _create_ a new Season.
+
+  ## Params
+    - `season_code` - the unique (by league) code to identify this season. Eg:
+    `season_code: "201617"`
+  """
+  def create(league, params) do
+    %__MODULE__{}
+    |> changeset(params)
+    |> Changeset.put_assoc(:league, league)
+    |> Map.put(:action, :insert)
+  end
 end

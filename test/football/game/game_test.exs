@@ -5,6 +5,7 @@ defmodule Football.GameTest do
 
   describe "leagues" do
     alias Football.Game.League
+    alias Football.Game.League.Season
 
     @valid_attrs %{code: "code", name: "some name"}
     @update_attrs %{name: "some updated name"}
@@ -50,6 +51,23 @@ defmodule Football.GameTest do
       league = league_fixture()
       assert {:error, %Ecto.Changeset{}} = Game.update_league(league, @invalid_attrs)
       assert league == Game.get_league!(league.code)
+    end
+
+    test "new_season/2 with valid data creates a new season" do
+      league = league_fixture()
+      season_params = %{season_code: "201617"}
+
+      assert {:ok, season} = Game.new_season(league, season_params)
+      assert %Season{} = season
+      assert season.season_code == "201617"
+      assert season.league_code == league.code
+    end
+
+    test "new_season/2 with invalid data returns error changeset" do
+      league = league_fixture()
+      season_params = %{season_code: nil}
+
+      assert {:error, %Ecto.Changeset{}} = Game.new_season(league, season_params)
     end
 
     test "delete_league/1 deletes the league" do

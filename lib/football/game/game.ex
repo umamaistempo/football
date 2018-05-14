@@ -38,6 +38,11 @@ defmodule Football.Game do
   def get_league!(code), do: Repo.get_by!(League, code: String.downcase(code))
 
   @doc """
+  Loads seasons from `league`.
+  """
+  def load_seasons(league), do: Repo.preload(league, :seasons)
+
+  @doc """
   Creates a league.
 
   ## Examples
@@ -71,6 +76,20 @@ defmodule Football.Game do
     league
     |> League.update(attrs)
     |> Repo.update()
+  end
+
+  @doc """
+  Starts a new season on `league`.
+
+  ## Examples
+
+      iex> new_season(league, %{season_code: "201617"})
+      {:ok, %Season{}}
+  """
+  def new_season(league, attrs) do
+    league
+    |> League.Season.create(attrs)
+    |> Repo.insert()
   end
 
   @doc """
