@@ -9,20 +9,27 @@ defmodule Football.Game.League do
   """
 
   use Ecto.Schema
+
   alias Ecto.Changeset
+  alias Football.Game.League.Season
 
   @type code :: String.t()
   @type t :: %__MODULE__{
           code: code(),
-          name: String.t()
+          name: String.t(),
+          seasons: term
         }
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
+
+  @derive {Phoenix.Param, key: :code}
 
   @primary_key false
   schema "leagues" do
     field(:code, :string, primary_key: true)
     field(:name, :string)
+
+    has_many(:seasons, Season, foreign_key: :league_code, references: :code)
   end
 
   @spec create(map) :: changeset(:insert)

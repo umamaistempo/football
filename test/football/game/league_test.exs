@@ -12,7 +12,7 @@ defmodule Football.Game.LeagueTest do
       assert :required in failed_validations(changeset).code
     end
 
-    test "code must have less than four characters" do
+    test "code must have up to four characters" do
       changeset = League.create(%{code: "aaaa"})
 
       refute :length in failed_validations(changeset).code
