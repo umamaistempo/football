@@ -4,9 +4,9 @@ defmodule Football.Game do
   """
 
   import Ecto.Query, warn: false
-  alias Football.Repo
 
   alias Football.Game.League
+  alias Football.Repo
 
   @doc """
   Returns the list of leagues.
@@ -36,6 +36,26 @@ defmodule Football.Game do
 
   """
   def get_league!(code), do: Repo.get_by!(League, code: String.downcase(code))
+
+  @doc """
+  Gets a single season that belongs to `league`.
+
+  Raises `Ecto.NoResultsError` if the Season does not exist.
+
+  ## Examples
+
+      iex> get_season!(%League{}, "foo")
+      %League{}
+
+      iex> get_season!(%League{}, "bar")
+      ** (Ecto.NoResultsError)
+  """
+  def get_season!(league = %League{}, season_code) do
+    league
+    |> Ecto.assoc(:seasons)
+    |> where([s], s.season_code == ^season_code)
+    |> Repo.one!()
+  end
 
   @doc """
   Loads seasons from `league`.

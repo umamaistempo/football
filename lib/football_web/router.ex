@@ -13,6 +13,7 @@ defmodule FootballWeb.Router do
       get("/:code", LeagueController, :show, as: :league)
 
       get("/:league/seasons", SeasonController, :index, as: :league_season)
+      get("/:league/seasons/:season", SeasonController, :show, as: :league_season)
     end
   end
 end
