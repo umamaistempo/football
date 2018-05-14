@@ -58,4 +58,30 @@ defmodule FootballWeb.SeasonControllerTest do
       assert Enum.all?(data, &(&1["league_code"] == league.code))
     end
   end
+
+  describe "show" do
+    test "shows an specific season", %{conn: conn} do
+      league = insert_league()
+      insert_season(league)
+      insert_season(league)
+      season = insert_season(league)
+
+      resource_path = api_league_season_path(conn, :show, league.code, season.season_code)
+
+      conn = get(conn, resource_path)
+      assert json_response(conn, 200)
+
+      data = json_response(conn, 200)["data"]
+
+      expected = %{
+        "code" => season.season_code,
+        "league_code" => league.code,
+        "_links" => %{
+          "self" => resource_path
+        }
+      }
+
+      assert data == expected
+    end
+  end
 end

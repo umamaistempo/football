@@ -11,9 +11,11 @@ defmodule FootballWeb.Router do
     scope "/leagues" do
       get("/", LeagueController, :index, as: :league)
       get("/:code", LeagueController, :show, as: :league)
+    end
 
-      get("/:league/seasons", SeasonController, :index, as: :league_season)
-      get("/:league/seasons/:season", SeasonController, :show, as: :league_season)
+    scope "/leagues/:league/seasons" do
+      get("/", SeasonController, :index, as: :league_season)
+      get("/:season", SeasonController, :show, as: :league_season)
     end
   end
 end
