@@ -91,20 +91,4 @@ defmodule Football.Game do
     |> League.Season.create(attrs)
     |> Repo.insert()
   end
-
-  @doc """
-  Deletes a League.
-
-  ## Examples
-
-      iex> delete_league(league)
-      {:ok, %League{}}
-
-      iex> delete_league(league)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_league(%League{} = league) do
-    Repo.delete(league)
-  end
 end

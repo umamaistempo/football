@@ -69,14 +69,5 @@ defmodule Football.GameTest do
 
       assert {:error, %Ecto.Changeset{}} = Game.new_season(league, season_params)
     end
-
-    test "delete_league/1 deletes the league" do
-      league = league_fixture()
-      assert {:ok, %League{}} = Game.delete_league(league)
-
-      assert_raise Ecto.NoResultsError, fn ->
-        Game.get_league!(league.code)
-      end
-    end
   end
 end
