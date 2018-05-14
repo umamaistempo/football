@@ -15,6 +15,20 @@ defmodule FootballWeb.LeagueControllerTest do
     league
   end
 
+  def match_format?(value) do
+    match?(
+      %{
+        "code" => _,
+        "name" => _,
+        "_links" => %{
+          "self" => _,
+          "seasons" => _
+        }
+      },
+      value
+    )
+  end
+
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
@@ -30,13 +44,12 @@ defmodule FootballWeb.LeagueControllerTest do
 
       data = json_response(conn, 200)["data"]
       assert Enum.count(data) == 3
-      assert Enum.all?(data, &Map.has_key?(&1, "code"))
-      assert Enum.all?(data, &Map.has_key?(&1, "name"))
+      assert Enum.all?(data, &match_format?/1)
     end
   end
 
   describe "show" do
-    test "show an specific league", %{conn: conn} do
+    test "shows an specific league", %{conn: conn} do
       league = insert_league()
 
       resource_path = api_league_path(conn, :show, league.code)
@@ -49,7 +62,10 @@ defmodule FootballWeb.LeagueControllerTest do
       expected = %{
         "code" => league.code,
         "name" => league.name,
-        "_links" => %{"self" => resource_path}
+        "_links" => %{
+          "self" => resource_path,
+          "seasons" => api_league_season_path(conn, :index, league.code)
+        }
       }
 
       assert data == expected

@@ -11,6 +11,8 @@ defmodule FootballWeb.Router do
     scope "/leagues" do
       get("/", LeagueController, :index, as: :league)
       get("/:code", LeagueController, :show, as: :league)
+
+      get("/:league/seasons", SeasonController, :index, as: :league_season)
     end
   end
 end
