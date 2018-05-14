@@ -22,6 +22,8 @@ defmodule Football.Game.League do
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
 
+  @derive {Phoenix.Param, key: :code}
+
   @primary_key false
   schema "leagues" do
     field(:code, :string, primary_key: true)

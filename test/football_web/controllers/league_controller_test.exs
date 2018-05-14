@@ -25,7 +25,7 @@ defmodule FootballWeb.LeagueControllerTest do
       insert_league()
       insert_league()
 
-      conn = get(conn, league_path(conn, :index))
+      conn = get(conn, api_league_path(conn, :index))
       assert json_response(conn, 200)
 
       data = json_response(conn, 200)["data"]
@@ -39,11 +39,18 @@ defmodule FootballWeb.LeagueControllerTest do
     test "show an specific league", %{conn: conn} do
       league = insert_league()
 
-      conn = get(conn, league_path(conn, :show, league.code))
+      resource_path = api_league_path(conn, :show, league.code)
+
+      conn = get(conn, resource_path)
       assert json_response(conn, 200)
 
       data = json_response(conn, 200)["data"]
-      expected = %{"code" => league.code, "name" => league.name}
+
+      expected = %{
+        "code" => league.code,
+        "name" => league.name,
+        "_links" => %{"self" => resource_path}
+      }
 
       assert data == expected
     end
