@@ -5,6 +5,8 @@ services:
       context: ../../
       dockerfile: ./automation/docker/elixir/Dockerfile
     command: mix do ecto.create, ecto.migrate, phx.server
+    environment:
+      FOOTBALL_DATABASE_HOSTNAME: postgres
     expose:
       - "4000"
     ports:
