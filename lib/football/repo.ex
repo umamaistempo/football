@@ -6,6 +6,17 @@ defmodule Football.Repo do
   DATABASE_URL environment variable.
   """
   def init(_, opts) do
-    {:ok, Keyword.put(opts, :url, System.get_env("DATABASE_URL"))}
+    username = System.get_env("FOOTBALL_DATABASE_USERNAME") || opts[:username] || "postgres"
+    password = System.get_env("FOOTBALL_DATABASE_PASSWORD") || opts[:password] || "postgres"
+    hostname = System.get_env("FOOTBALL_DATABASE_HOSTNAME") || opts[:hostname] || "localhost"
+
+    opts =
+      opts
+      |> Keyword.put(:url, System.get_env("FOOTBALL_DATABASE_URL"))
+      |> Keyword.put(:username, username)
+      |> Keyword.put(:password, password)
+      |> Keyword.put(:hostname, hostname)
+
+    {:ok, opts}
   end
 end
