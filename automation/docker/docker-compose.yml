@@ -7,15 +7,44 @@ services:
     command: mix do ecto.create, ecto.migrate, phx.server
     environment:
       FOOTBALL_DATABASE_HOSTNAME: postgres
+    restart: on-failure
     expose:
       - "4000"
-    ports:
-      - "4000:4000"
-    depends_on:
-      - postgres
+    networks:
+      - database
+      - backend
+
+  football-replica1:
+    extends: football
+  football-replica2:
+    extends: football
+
   postgres:
     image: postgres:9.6-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
+    networks:
+      - database
+
+  haproxy:
+    build:
+      context: ./haproxy/
+      dockerfile: ./Dockerfile
+    restart: always
+    links:
+      - "football:football1"
+      - "football-replica1:football2"
+      - "football-replica2:football3"
+    ports:
+      - 80:80
+    depends_on:
+      - football
+    networks:
+      - backend
+networks:
+  database:
+    driver: bridge
+  backend:
+    driver: bridge

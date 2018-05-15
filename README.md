@@ -23,11 +23,6 @@ mix do deps.get, compile, ecto.create, ecto.migrate
 sudo docker-compose -f "automation/docker/docker-compose.yml" up
 ```
 
-### Directly
-```bash
-mix phx.server
-```
-
 ## Test the codebase
 
 ### On docker
