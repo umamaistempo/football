@@ -13,12 +13,22 @@ defmodule Football.Game.League.Season.Match do
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
 
   schema "matches" do
+    field(:league_season_id, :integer)
+
     field(:game_date, :date)
 
     field(:half_time_home_goals, :integer)
     field(:half_time_away_goals, :integer)
     field(:full_time_home_goals, :integer)
     field(:full_time_away_goals, :integer)
+
+    belongs_to(
+      :season,
+      Season,
+      foreign_key: :league_season_id,
+      references: :id,
+      define_field: false
+    )
   end
 
   @spec create(Season.t(), term, term, map) :: changeset(:insert)
@@ -42,8 +52,8 @@ defmodule Football.Game.League.Season.Match do
     |> Changeset.validate_required([:game_date])
     |> input_results(params)
     |> Changeset.put_assoc(:season, season)
-    |> Changeset.put_assoc(:home_team, home_team)
-    |> Changeset.put_assoc(:away_team, away_team)
+    # |> Changeset.put_assoc(:home_team, home_team)
+    # |> Changeset.put_assoc(:away_team, away_team)
     |> Map.put(:action, :insert)
   end
 
