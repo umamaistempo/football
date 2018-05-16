@@ -1,4 +1,8 @@
 defmodule Football.Game.League.Season.Overview do
+  @moduledoc """
+  Provides an overview on every team performance on a certain season.
+  """
+
   alias Football.Game.League.Season
   alias Football.Game.Team
 
@@ -13,6 +17,7 @@ defmodule Football.Game.League.Season.Overview do
         }
 
   @spec overview(Season.t()) :: overview
+  # TODO: test
   def overview(season) do
     season.matches
     |> Enum.reduce(%{}, fn el, acc ->

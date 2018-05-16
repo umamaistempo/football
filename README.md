@@ -1,6 +1,13 @@
 # Football
 [![Build Status](https://travis-ci.org/mememori/football.svg?branch=master)](https://travis-ci.org/mememori/football)[![Coverage Status](https://coveralls.io/repos/github/mememori/football/badge.svg?branch=master)](https://coveralls.io/github/mememori/football?branch=master)[![Inline docs](http://inch-ci.org/github/mememori/football.svg?branch=master)](http://inch-ci.org/github/mememori/football)[![Ebert](https://ebertapp.io/github/mememori/football.svg)](https://ebertapp.io/github/mememori/football)
 
+## Application configuration
+### Environment variables
+- `FOOTBALL_DATABASE_USERNAME` - _optional_ - Sets the Database username
+- `FOOTBALL_DATABASE_PASSWORD` - _optional_ - Sets the Database user password
+- `FOOTBALL_DATABASE_HOSTNAME` - _optional_ - Sets the Database hostname
+- `FOOTBALL_DATABASE_URL` - _optional_ - Sets the Database connection url (if set, the connection will ignore the username, password and hostname passed before)
+
 ## Compiling the application
 This step is needed before executing any of the other actions (start server, test, document, ...)
 

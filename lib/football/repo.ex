@@ -1,10 +1,6 @@
 defmodule Football.Repo do
   use Ecto.Repo, otp_app: :football
 
-  @doc """
-  Dynamically loads the repository url from the
-  DATABASE_URL environment variable.
-  """
   def init(_, opts) do
     username = System.get_env("FOOTBALL_DATABASE_USERNAME") || opts[:username] || "postgres"
     password = System.get_env("FOOTBALL_DATABASE_PASSWORD") || opts[:password] || "postgres"
