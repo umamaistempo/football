@@ -15,7 +15,7 @@ defmodule Football.Game.Team do
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
 
-  schema "leagues" do
+  schema "teams" do
     field(:name, :string)
   end
 

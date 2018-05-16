@@ -7,6 +7,7 @@ defmodule Football.Game.League.Season do
 
   alias Ecto.Changeset
   alias Football.Game.League
+  alias Football.Game.League.Season.Match
 
   @type id :: pos_integer
   @type code :: String.t()
@@ -14,7 +15,8 @@ defmodule Football.Game.League.Season do
           id: id,
           season_code: code,
           league_code: League.code(),
-          league: League.t() | term
+          league: League.t() | term,
+          matches: [Match.t()] | term
         }
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
@@ -31,6 +33,8 @@ defmodule Football.Game.League.Season do
       references: :code,
       type: :string
     )
+
+    has_many(:matches, Match, foreign_key: :league_season_id)
   end
 
   @spec create(League.t(), map) :: changeset(:insert)
