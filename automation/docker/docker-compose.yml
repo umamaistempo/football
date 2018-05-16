@@ -5,8 +5,10 @@ services:
       context: ../../
       dockerfile: ./automation/docker/elixir/Dockerfile
     command: mix do ecto.create, ecto.migrate, phx.server
+    entrypoint: ./automation/docker/elixir/wait-for-postgres.sh
     environment:
       FOOTBALL_DATABASE_HOSTNAME: postgres
+      FOOTBALL_DATABASE_PASSWORD: postgres
     restart: on-failure
     expose:
       - "4000"
@@ -41,6 +43,8 @@ services:
       - 80:80
     depends_on:
       - football
+      - football-replica1
+      - football-replica2
     networks:
       - backend
 networks:
