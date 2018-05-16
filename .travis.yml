@@ -11,6 +11,7 @@ script:
   - mix ecto.create
   - mix ecto.migrate
   - mix test
+  - mix coveralls.travis
 services:
   - postgresql
 addons:
