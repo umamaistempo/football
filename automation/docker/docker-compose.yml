@@ -4,7 +4,7 @@ services:
     build:
       context: ../../
       dockerfile: ./automation/docker/elixir/Dockerfile
-    command: mix do ecto.setup, phx.server
+    command: mix do ecto.create, phx.server
     entrypoint: ./automation/docker/elixir/wait-for-postgres.sh
     environment:
       FOOTBALL_DATABASE_HOSTNAME: postgres

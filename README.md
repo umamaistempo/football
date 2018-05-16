@@ -39,6 +39,12 @@ Note that starting the project on docker will start three instances of the serve
 sudo docker-compose -f "automation/docker/docker-compose.yml" up
 ```
 
+If this is the first time starting the server, with the containers up, run the seeds builder:
+TODO: Make this smarter or idempotent
+```bash
+sudo docker exec docker_football_1 mix ecto.setup
+```
+
 Access the server through `http://localhost/api/leagues`
 
 #### Directly
