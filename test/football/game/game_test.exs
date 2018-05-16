@@ -53,21 +53,21 @@ defmodule Football.GameTest do
       assert league == Game.get_league!(league.code)
     end
 
-    test "new_season/2 with valid data creates a new season" do
+    test "create_season/2 with valid data creates a new season" do
       league = league_fixture()
       season_params = %{season_code: "201617"}
 
-      assert {:ok, season} = Game.new_season(league, season_params)
+      assert {:ok, season} = Game.create_season(league, season_params)
       assert %Season{} = season
       assert season.season_code == "201617"
       assert season.league_code == league.code
     end
 
-    test "new_season/2 with invalid data returns error changeset" do
+    test "create_season/2 with invalid data returns error changeset" do
       league = league_fixture()
       season_params = %{season_code: nil}
 
-      assert {:error, %Ecto.Changeset{}} = Game.new_season(league, season_params)
+      assert {:error, %Ecto.Changeset{}} = Game.create_season(league, season_params)
     end
   end
 end
