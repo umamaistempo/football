@@ -4,11 +4,13 @@ defmodule Football.Game.League.MatchTest do
   alias Football.Game.League
   alias Football.Game.League.Season
   alias Football.Game.League.Season.Match
+  alias Football.Game.Team
 
   import Football.Test.Support.ChangesetHelper
 
   def season do
     %Season{
+      id: 123,
       season_code: "201617",
       league_code: "foo",
       league: %League{code: "foo"}
@@ -16,7 +18,10 @@ defmodule Football.Game.League.MatchTest do
   end
 
   def team do
-    %{}
+    %Team{
+      id: Enum.random(1..1_000),
+      name: "Team RWBY"
+    }
   end
 
   describe "create/4" do
