@@ -39,6 +39,7 @@ defmodule Football.Game.League.Season.Overview do
       |> Map.update(el.away_team_id, Map.put(away, :team, el.away_team), &sum(&1, away))
     end)
     |> Map.values()
+    |> Enum.sort_by(& &1.team.id, &<=/2)
   end
 
   @spec winner(non_neg_integer, non_neg_integer) :: :home | :away | :draw | nil

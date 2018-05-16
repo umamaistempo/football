@@ -1,6 +1,8 @@
 defmodule FootballWeb.TeamView do
   use FootballWeb, :view
 
+  alias FootballWeb.TeamView
+
   def render("team.json", %{team: team}) do
     %{
       id: team.id,
