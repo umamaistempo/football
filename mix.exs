@@ -17,7 +17,8 @@ defmodule Football.Mixfile do
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
-        "coveralls.html": :test
+        "coveralls.html": :test,
+        "inch.report": :dev
       ],
       aliases: aliases(),
       deps: deps()
@@ -53,6 +54,7 @@ defmodule Football.Mixfile do
       {:postgrex, ">= 0.0.0"},
       {:cowboy, "~> 1.0"},
       {:excoveralls, "~> 0.8.2", only: :test, runtime: false},
+      {:inch_ex, ">= 0.0.0", only: :dev, runtime: false},
       {:credo, "~> 0.9.2", only: :dev, runtime: false},
       {:ex_doc, "~> 0.18", only: :dev, runtime: false}
     ]

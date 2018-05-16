@@ -7,6 +7,8 @@ otp_release:
   - 20.0
 env:
   - MIX_ENV=test
+services:
+  - postgresql
 script:
   - mix ecto.create
   - mix ecto.migrate
@@ -14,5 +16,8 @@ script:
   - mix coveralls.travis
 services:
   - postgresql
+after_script:
+  - MIX_ENV=dev mix deps.get
+  - MIX_ENV=dev mix inch.report
 addons:
   postgresql: "9.6"
