@@ -46,6 +46,7 @@ mix test
 ```
 
 ## Generate documentation
+This command will generate the application documentation on the application `/doc` folder.
 
 ### On docker
 TODO
