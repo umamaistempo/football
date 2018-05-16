@@ -17,7 +17,7 @@ defmodule Football.Game.League do
   @type t :: %__MODULE__{
           code: code(),
           name: String.t(),
-          seasons: term
+          seasons: [Season.t()] | term
         }
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}

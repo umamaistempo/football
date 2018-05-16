@@ -10,7 +10,7 @@ defmodule Football.Game.League.SeasonTest do
     %League{code: "foo"}
   end
 
-  describe "create/1" do
+  describe "create/2" do
     test "requires season_code" do
       changeset = Season.create(league(), %{})
 

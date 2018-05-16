@@ -6,8 +6,12 @@ defmodule Football.Game do
   import Ecto.Query, warn: false
 
   alias Football.Game.League
+  alias Football.Game.League.Season
+  alias Football.Game.League.Season.Match
+  alias Football.Game.Team
   alias Football.Repo
 
+  @spec list_leagues() :: [League.t()]
   @doc """
   Returns the list of leagues.
 
@@ -21,6 +25,7 @@ defmodule Football.Game do
     Repo.all(League)
   end
 
+  @spec get_league!(League.code()) :: League.t() | no_return
   @doc """
   Gets a single league.
 
@@ -37,6 +42,7 @@ defmodule Football.Game do
   """
   def get_league!(code), do: Repo.get_by!(League, code: String.downcase(code))
 
+  @spec get_season!(League.t(), Season.code()) :: Season.t() | no_return
   @doc """
   Gets a single season that belongs to `league`.
 
@@ -57,11 +63,13 @@ defmodule Football.Game do
     |> Repo.one!()
   end
 
+  @spec load_seasons(League.t()) :: League.t()
   @doc """
-  Loads seasons from `league`.
+  Loads seasons from `league` into it.
   """
   def load_seasons(league), do: Repo.preload(league, :seasons)
 
+  @spec create_league(map) :: {:ok, League.t()} | {:error, League.changeset()}
   @doc """
   Creates a league.
 
@@ -74,12 +82,13 @@ defmodule Football.Game do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_league(attrs \\ %{}) do
+  def create_league(attrs) do
     attrs
     |> League.create()
     |> Repo.insert()
   end
 
+  @spec update_league(League.t(), map) :: {:ok, League.t()} | {:error, League.changeset()}
   @doc """
   Updates a league.
 
@@ -98,17 +107,60 @@ defmodule Football.Game do
     |> Repo.update()
   end
 
+  @spec create_season(League.t(), map) :: {:ok, Season.t()} | {:error, Season.changeset()}
   @doc """
   Starts a new season on `league`.
 
   ## Examples
 
-      iex> new_season(league, %{season_code: "201617"})
+      iex> create_season(league, %{season_code: "201617"})
       {:ok, %Season{}}
   """
-  def new_season(league, attrs) do
+  def create_season(league, attrs) do
     league
-    |> League.Season.create(attrs)
+    |> Season.create(attrs)
     |> Repo.insert()
   end
+
+  @spec create_team(map) :: {:ok, Team.t()} | {:error, Team.changeset()}
+  @doc """
+  Creates a new team.
+
+  ## Examples
+
+      iex> create_team(%{name: "Team Team"})
+      {:ok, %Team{}}
+  """
+  def create_team(attrs) do
+    attrs
+    |> Team.create()
+    |> Repo.insert()
+  end
+
+  @spec create_match(Season.t(), Team.t(), Team.t(), map) ::
+          {:ok, Match.t()} | {:error, Match.changeset()}
+  @doc """
+  Creates a match between `home_team` and `away_team` during `season`.
+
+  ## Examples
+
+      iex> create_match(
+      ...>   %Season{},
+      ...>   %Team{},
+      ...>   %Team{},
+      ...>   %{game_date: ~D[2000-01-01]}
+      ...> )
+      {:ok, %Match{}}
+  """
+  def create_match(season, home_team, away_team, attrs) do
+    season
+    |> Match.create(home_team, away_team, attrs)
+    |> Repo.insert()
+  end
+
+  @spec load_matches(Season.t()) :: Season.t()
+  @doc """
+  Loads matches from `season` into it.
+  """
+  def load_matches(season), do: Repo.preload(season, matches: [:home_team, :away_team])
 end

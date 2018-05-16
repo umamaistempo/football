@@ -21,7 +21,7 @@ defmodule FootballWeb.SeasonControllerTest do
       |> Enum.take_random(4)
       |> to_string
 
-    {:ok, season} = Game.new_season(league, %{season_code: code})
+    {:ok, season} = Game.create_season(league, %{season_code: code})
     season
   end
 
