@@ -63,8 +63,8 @@ defmodule FootballWeb.LeagueControllerTest do
         "code" => league.code,
         "name" => league.name,
         "_links" => %{
-          "self" => resource_path,
-          "seasons" => api_league_season_path(conn, :index, league.code)
+          "self" => api_league_url(FootballWeb.Endpoint, :show, league.code),
+          "seasons" => api_league_season_url(FootballWeb.Endpoint, :index, league.code)
         }
       }
 

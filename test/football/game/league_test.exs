@@ -41,10 +41,10 @@ defmodule Football.Game.LeagueTest do
       assert data.code == "aeo9"
     end
 
-    test "name is required" do
+    test "name is not required" do
       changeset = League.create(%{})
 
-      assert :required in failed_validations(changeset).name
+      refute :required in failed_validations(changeset).name
     end
 
     test "changeset is insert-only" do
