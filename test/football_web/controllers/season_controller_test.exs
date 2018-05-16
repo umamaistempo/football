@@ -106,7 +106,8 @@ defmodule FootballWeb.SeasonControllerTest do
         "matches" => [],
         "overview" => [],
         "_links" => %{
-          "self" => resource_path
+          "self" =>
+            api_league_season_url(FootballWeb.Endpoint, :show, league.code, season.season_code)
         }
       }
 
@@ -124,7 +125,7 @@ defmodule FootballWeb.SeasonControllerTest do
         half_time_home_goals: 1,
         half_time_away_goals: 0,
         full_time_home_goals: 1,
-        full_time_away_goals: 4,
+        full_time_away_goals: 4
       }
 
       {:ok, match} = Game.create_match(season, home, away, match_params)
@@ -160,7 +161,8 @@ defmodule FootballWeb.SeasonControllerTest do
       season2 = insert_season(league)
 
       new_match = fn season ->
-        {:ok, _} = Game.create_match(season, insert_team(), insert_team(), %{game_date: ~D[2001-05-06]})
+        {:ok, _} =
+          Game.create_match(season, insert_team(), insert_team(), %{game_date: ~D[2001-05-06]})
       end
 
       new_match.(season1)
@@ -190,7 +192,7 @@ defmodule FootballWeb.SeasonControllerTest do
         half_time_home_goals: 1,
         half_time_away_goals: 0,
         full_time_home_goals: 1,
-        full_time_away_goals: 4,
+        full_time_away_goals: 4
       }
 
       {:ok, _} = Game.create_match(season, home, away, match_params)
@@ -200,7 +202,7 @@ defmodule FootballWeb.SeasonControllerTest do
         half_time_home_goals: 1,
         half_time_away_goals: 1,
         full_time_home_goals: 1,
-        full_time_away_goals: 1,
+        full_time_away_goals: 1
       }
 
       {:ok, _} = Game.create_match(season, home, away2, match_params)

@@ -44,7 +44,7 @@ defmodule Football.Game.League do
   def create(params) do
     %__MODULE__{}
     |> Changeset.cast(params, [:code, :name])
-    |> Changeset.validate_required([:name])
+    |> Changeset.validate_required([:code])
     |> validate_code()
     |> Map.put(:action, :insert)
   end

@@ -25,7 +25,7 @@ defmodule FootballWeb.SeasonView do
       league_code: season.league_code,
       _links: %{
         self:
-          api_league_season_path(
+          api_league_season_url(
             FootballWeb.Endpoint,
             :show,
             season.league_code,
