@@ -8,8 +8,14 @@ defmodule Football.Game.League.Season do
   alias Ecto.Changeset
   alias Football.Game.League
 
+  @type id :: pos_integer
   @type code :: String.t()
-  @type t :: %__MODULE__{}
+  @type t :: %__MODULE__{
+          id: id,
+          season_code: code,
+          league_code: League.code(),
+          league: League.t() | term
+        }
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
 
@@ -33,7 +39,7 @@ defmodule Football.Game.League.Season do
 
   ## Params
     - `season_code` - the unique (by league) code to identify this season. Eg:
-    `season_code: "201617"`
+    `season_code: "201617"`.
   """
   def create(league, params) do
     %__MODULE__{}

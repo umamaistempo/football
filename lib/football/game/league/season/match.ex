@@ -7,13 +7,30 @@ defmodule Football.Game.League.Season.Match do
 
   alias Ecto.Changeset
   alias Football.Game.League.Season
+  alias Football.Game.Team
 
-  @type t :: %__MODULE__{}
+  @type id :: pos_integer
+  @type t :: %__MODULE__{
+          id: id,
+          game_date: Date.t(),
+          half_time_home_goals: non_neg_integer | nil,
+          half_time_away_goals: non_neg_integer | nil,
+          full_time_home_goals: non_neg_integer | nil,
+          full_time_away_goals: non_neg_integer | nil,
+          league_season_id: Season.id(),
+          season: Season.t() | term,
+          home_team_id: Team.id(),
+          home_team: Team.t() | term,
+          away_team_id: Team.id(),
+          away_team: Team.t() | term
+        }
   @type changeset :: changeset(Changeset.action())
   @type changeset(action) :: %Changeset{data: %__MODULE__{}, action: action}
 
   schema "matches" do
     field(:league_season_id, :integer)
+    field(:home_team_id, :integer)
+    field(:away_team_id, :integer)
 
     field(:game_date, :date)
 
@@ -29,6 +46,9 @@ defmodule Football.Game.League.Season.Match do
       references: :id,
       define_field: false
     )
+
+    belongs_to(:home_team, Team, define_field: false)
+    belongs_to(:away_team, Team, define_field: false)
   end
 
   @spec create(Season.t(), term, term, map) :: changeset(:insert)
@@ -52,8 +72,8 @@ defmodule Football.Game.League.Season.Match do
     |> Changeset.validate_required([:game_date])
     |> input_results(params)
     |> Changeset.put_assoc(:season, season)
-    # |> Changeset.put_assoc(:home_team, home_team)
-    # |> Changeset.put_assoc(:away_team, away_team)
+    |> Changeset.put_assoc(:home_team, home_team)
+    |> Changeset.put_assoc(:away_team, away_team)
     |> Map.put(:action, :insert)
   end
 
