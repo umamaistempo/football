@@ -12,6 +12,13 @@ defmodule Football.Mixfile do
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       consolidate_protocols: Mix.env() == :prod,
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       aliases: aliases(),
       deps: deps()
     ]
@@ -45,6 +52,7 @@ defmodule Football.Mixfile do
       {:gettext, "~> 0.11"},
       {:postgrex, ">= 0.0.0"},
       {:cowboy, "~> 1.0"},
+      {:excoveralls, "~> 0.8.2", only: :test, runtime: false},
       {:credo, "~> 0.9.2", only: :dev, runtime: false},
       {:ex_doc, "~> 0.18", only: :dev, runtime: false}
     ]
