@@ -18,12 +18,18 @@ defmodule FootballWeb.SeasonController do
     render(conn, "index.json", seasons: league.seasons)
   end
 
+  @doc """
+  Shows data about an specific league season.
+  """
   def show(conn, %{"league" => league_code, "season" => season_code}) do
     season =
       league_code
       |> Game.get_league!()
       |> Game.get_season!(season_code)
+      |> Game.load_matches()
 
-    render(conn, "show.json", season: season)
+    overview = Game.season_overview(season)
+
+    render(conn, "show.json", season: season, overview: overview)
   end
 end

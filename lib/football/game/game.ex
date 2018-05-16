@@ -122,6 +122,14 @@ defmodule Football.Game do
     |> Repo.insert()
   end
 
+  @spec season_overview(Season.t()) :: Season.Overview.t()
+  @doc """
+  Produces an overview of teams data based on the season match results.
+  """
+  def season_overview(season) do
+    Season.Overview.overview(season)
+  end
+
   @spec create_team(map) :: {:ok, Team.t()} | {:error, Team.changeset()}
   @doc """
   Creates a new team.

@@ -76,6 +76,8 @@ defmodule FootballWeb.SeasonControllerTest do
       expected = %{
         "code" => season.season_code,
         "league_code" => league.code,
+        "matches" => [],
+        "overview" => [],
         "_links" => %{
           "self" => resource_path
         }
